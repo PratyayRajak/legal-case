@@ -1,0 +1,139 @@
+# PLACEHOLDER RULES — DRAFT status, never run in production
+# These exist so the pipeline works end-to-end before real rules arrive.
+# Real rules will be imported from the legal expert's Hindi rule table
+# using scripts/import_rules.py
+
+- id: R001_PLACEHOLDER
+  text_hi: "[PLACEHOLDER] न्यायालय पदानुक्रम नियम — जिला न्यायालय, उच्च न्यायालय, सर्वोच्च न्यायालय का क्रम।"
+  source: "PLACEHOLDER — to be filled by legal expert"
+  effective_from: "2020-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue]
+    court_levels: [district, high, supreme]
+  requires_fields: [court_level, prior_court_history]
+  logic:
+    description: "PLACEHOLDER — real logic to be verified by legal expert"
+    if: {field: court_level, equals: high}
+    require: {field: prior_court_history, any_match: {court_level: district}}
+  severity: blocking
+  message_hi: "[PLACEHOLDER] न्यायालय पदानुक्रम का पालन नहीं किया गया।"
+  message_en: "[PLACEHOLDER] Court hierarchy not followed."
+  status: DRAFT
+  review:
+    drafted_by: "llm"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {court_level: {value: high, found: true}, prior_court_history: {value: [{court_level: district}], found: true}}
+      expect: pass
+    - input: {court_level: {value: high, found: true}, prior_court_history: {value: [], found: true}}
+      expect: fail
+    - input: {court_level: {value: high, found: false}, prior_court_history: {value: null, found: false}}
+      expect: cannot_evaluate
+
+- id: R002_PLACEHOLDER
+  text_hi: "[PLACEHOLDER] परिसीमा नियम — निर्धारित अवधि में मामला दाखिल किया जाना चाहिए।"
+  source: "PLACEHOLDER — Limitation Act reference to be provided"
+  effective_from: "2020-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue]
+  requires_fields: [filing_date]
+  logic:
+    description: "PLACEHOLDER — limitation period in days to be specified by legal expert"
+  severity: blocking
+  message_hi: "[PLACEHOLDER] मामला परिसीमा अवधि के बाहर दाखिल किया गया।"
+  message_en: "[PLACEHOLDER] Case filed outside the limitation period."
+  status: DRAFT
+  review:
+    drafted_by: "llm"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {filing_date: {value: "2024-01-01", found: true}}
+      expect: pass
+    - input: {filing_date: {value: "1990-01-01", found: true}}
+      expect: cannot_evaluate
+    - input: {filing_date: {value: null, found: false}}
+      expect: cannot_evaluate
+
+- id: R003_PLACEHOLDER
+  text_hi: "[PLACEHOLDER] अधिकारिता नियम — उचित न्यायालय में मामला दाखिल होना चाहिए।"
+  source: "PLACEHOLDER"
+  effective_from: "2020-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue]
+  requires_fields: [court_level, case_type]
+  logic:
+    description: "PLACEHOLDER — jurisdiction rules to be specified"
+  severity: blocking
+  message_hi: "[PLACEHOLDER] न्यायालय को इस प्रकार के मामले पर अधिकारिता नहीं है।"
+  message_en: "[PLACEHOLDER] Court lacks jurisdiction for this case type."
+  status: DRAFT
+  review:
+    drafted_by: "llm"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {court_level: {value: district, found: true}, case_type: {value: revenue, found: true}}
+      expect: pass
+    - input: {court_level: {value: null, found: false}, case_type: {value: null, found: false}}
+      expect: cannot_evaluate
+    - input: {court_level: {value: supreme, found: true}, case_type: {value: revenue, found: true}}
+      expect: cannot_evaluate
+
+- id: R004_PLACEHOLDER
+  text_hi: "[PLACEHOLDER] आवश्यक दस्तावेज नियम — याचिका के साथ आवश्यक दस्तावेज होने चाहिए।"
+  source: "PLACEHOLDER"
+  effective_from: "2020-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue]
+  requires_fields: [documents_list]
+  logic:
+    description: "PLACEHOLDER — required document types to be specified"
+  severity: warning
+  message_hi: "[PLACEHOLDER] आवश्यक दस्तावेज अनुपलब्ध।"
+  message_en: "[PLACEHOLDER] Required documents not found in the file."
+  status: DRAFT
+  review:
+    drafted_by: "llm"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {documents_list: {value: [{doc_type: petition}], found: true}}
+      expect: pass
+    - input: {documents_list: {value: [], found: true}}
+      expect: fail
+    - input: {documents_list: {value: null, found: false}}
+      expect: cannot_evaluate
+
+- id: R005_PLACEHOLDER
+  text_hi: "[PLACEHOLDER] तिथि संगति नियम — दाखिल करने की तिथि सुनवाई की तिथि से पहले होनी चाहिए।"
+  source: "PLACEHOLDER"
+  effective_from: "2020-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue]
+  requires_fields: [filing_date, next_hearing_date]
+  logic:
+    description: "filing_date must be before next_hearing_date"
+    if: {field: filing_date}
+    require: {field: next_hearing_date, after: filing_date}
+  severity: warning
+  message_hi: "[PLACEHOLDER] दाखिल करने की तिथि और सुनवाई की तिथि में असंगति।"
+  message_en: "[PLACEHOLDER] Filing date and hearing date are inconsistent."
+  status: DRAFT
+  review:
+    drafted_by: "llm"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {filing_date: {value: "2024-01-01", found: true}, next_hearing_date: {value: "2024-06-01", found: true}}
+      expect: pass
+    - input: {filing_date: {value: "2024-06-01", found: true}, next_hearing_date: {value: "2024-01-01", found: true}}
+      expect: fail
+    - input: {filing_date: {value: null, found: false}, next_hearing_date: {value: null, found: false}}
+      expect: cannot_evaluate

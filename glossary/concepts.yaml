@@ -1,0 +1,728 @@
+# Bilingual Legal Concept Glossary — Revenue Court Domain
+# Version: 1.0.0 (PLACEHOLDER — awaiting expert review)
+# All entries marked review.reviewed_by: null are DRAFT and unverified.
+# A human Hindi legal expert must review before production use.
+
+version: "1.0.0"
+domain: "revenue_court"
+status: "PLACEHOLDER"
+
+concepts:
+  - concept_id: STATUS_REJECTED
+    category: case_status
+    definition_en: "The application/petition was dismissed or refused by the court."
+    definition_hi: "न्यायालय द्वारा आवेदन/याचिका अस्वीकार या खारिज कर दी गई।"
+    surface_forms:
+      hi: ["खारिज", "निरस्त", "अस्वीकृत", "नामंजूर"]
+      en: ["dismissed", "rejected", "refused", "declined"]
+    preferred_term:
+      hi: "खारिज"
+      en: "rejected"
+    examples:
+      - {lang: hi, text: "आवेदन खारिज किया जाता है।", maps_to: STATUS_REJECTED}
+      - {lang: en, text: "The petition is hereby dismissed.", maps_to: STATUS_REJECTED}
+    not_to_be_confused_with: [STATUS_DISPOSED, STATUS_WITHDRAWN]
+    disambiguation: "खारिज refers to rejection on merits or non-compliance. Distinguish from STATUS_DISPOSED (resolved on merits with final order) and STATUS_WITHDRAWN (petitioner withdrew)."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: STATUS_DISPOSED
+    category: case_status
+    definition_en: "The case has been fully resolved with a final order."
+    definition_hi: "मामला अंतिम आदेश के साथ पूरी तरह निपटाया गया।"
+    surface_forms:
+      hi: ["निस्तारित", "निपटारा", "समाप्त"]
+      en: ["disposed", "disposed of", "resolved", "concluded", "decided"]
+    preferred_term:
+      hi: "निस्तारित"
+      en: "disposed"
+    examples:
+      - {lang: hi, text: "प्रकरण निस्तारित किया जाता है।", maps_to: STATUS_DISPOSED}
+      - {lang: en, text: "Case disposed of.", maps_to: STATUS_DISPOSED}
+    not_to_be_confused_with: [STATUS_REJECTED]
+    disambiguation: "STATUS_DISPOSED means concluded. STATUS_REJECTED means refused."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: STATUS_PENDING
+    category: case_status
+    definition_en: "The case is still ongoing and not yet decided."
+    definition_hi: "मामला अभी भी चल रहा है और अभी तक निर्णय नहीं हुआ है।"
+    surface_forms:
+      hi: ["लंबित", "विचाराधीन", "प्रगति पर"]
+      en: ["pending", "ongoing", "sub judice", "under consideration"]
+    preferred_term:
+      hi: "लंबित"
+      en: "pending"
+    examples:
+      - {lang: hi, text: "प्रकरण अभी भी लंबित है।", maps_to: STATUS_PENDING}
+      - {lang: en, text: "Matter is pending before the court.", maps_to: STATUS_PENDING}
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: STATUS_STAYED
+    category: case_status
+    definition_en: "Court proceedings are temporarily halted by an order."
+    definition_hi: "न्यायालय की कार्यवाही अस्थायी रूप से आदेश द्वारा रोकी गई है।"
+    surface_forms:
+      hi: ["स्थगित", "स्थगन", "रोक"]
+      en: ["stayed", "stay order", "suspended", "halted"]
+    preferred_term:
+      hi: "स्थगित"
+      en: "stayed"
+    examples:
+      - {lang: hi, text: "कार्यवाही स्थगित की जाती है।", maps_to: STATUS_STAYED}
+      - {lang: en, text: "Operation of the order is stayed.", maps_to: STATUS_STAYED}
+    not_to_be_confused_with: [STATUS_PENDING]
+    disambiguation: "STATUS_STAYED is an active legal hold. STATUS_PENDING is simply ongoing without a hold."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: STATUS_ALLOWED
+    category: case_status
+    definition_en: "The petition or appeal was granted/allowed by the court."
+    definition_hi: "याचिका या अपील न्यायालय द्वारा स्वीकार की गई।"
+    surface_forms:
+      hi: ["स्वीकृत", "मंजूर", "स्वीकार"]
+      en: ["allowed", "granted", "accepted", "upheld"]
+    preferred_term:
+      hi: "स्वीकृत"
+      en: "allowed"
+    examples:
+      - {lang: hi, text: "अपील स्वीकार की जाती है।", maps_to: STATUS_ALLOWED}
+      - {lang: en, text: "The appeal is allowed.", maps_to: STATUS_ALLOWED}
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: STATUS_WITHDRAWN
+    category: case_status
+    definition_en: "The petitioner voluntarily withdrew the case."
+    definition_hi: "याचिकाकर्ता ने स्वेच्छा से मामला वापस ले लिया।"
+    surface_forms:
+      hi: ["वापस लिया", "प्रत्याहृत", "वापसी"]
+      en: ["withdrawn", "dismissed as withdrawn", "voluntarily dismissed"]
+    preferred_term:
+      hi: "वापस लिया"
+      en: "withdrawn"
+    examples:
+      - {lang: hi, text: "याचिका वापस ली जाती है।", maps_to: STATUS_WITHDRAWN}
+      - {lang: en, text: "Case withdrawn by petitioner.", maps_to: STATUS_WITHDRAWN}
+    not_to_be_confused_with: [STATUS_REJECTED]
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: COURT_DISTRICT
+    category: court_level
+    definition_en: "District-level court (lowest general civil court)."
+    definition_hi: "जिला स्तरीय न्यायालय।"
+    surface_forms:
+      hi: ["जिला न्यायालय", "जिला अदालत", "जिला जज"]
+      en: ["district court", "district judge", "civil court"]
+    preferred_term:
+      hi: "जिला न्यायालय"
+      en: "district court"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: COURT_HIGH
+    category: court_level
+    definition_en: "High Court of a state."
+    definition_hi: "राज्य का उच्च न्यायालय।"
+    surface_forms:
+      hi: ["उच्च न्यायालय", "हाई कोर्ट"]
+      en: ["high court", "HC"]
+    preferred_term:
+      hi: "उच्च न्यायालय"
+      en: "high court"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: COURT_SUPREME
+    category: court_level
+    definition_en: "Supreme Court of India."
+    definition_hi: "भारत का सर्वोच्च न्यायालय।"
+    surface_forms:
+      hi: ["सर्वोच्च न्यायालय", "सुप्रीम कोर्ट"]
+      en: ["supreme court", "SC", "apex court"]
+    preferred_term:
+      hi: "सर्वोच्च न्यायालय"
+      en: "supreme court"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: COURT_REVENUE_BOARD
+    category: court_level
+    definition_en: "Board of Revenue — the highest revenue court in a state."
+    definition_hi: "राजस्व बोर्ड — राज्य का सर्वोच्च राजस्व न्यायालय।"
+    surface_forms:
+      hi: ["राजस्व बोर्ड", "बोर्ड ऑफ रेवेन्यू"]
+      en: ["board of revenue", "revenue board"]
+    preferred_term:
+      hi: "राजस्व बोर्ड"
+      en: "board of revenue"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROCEEDING_MUTATION
+    category: proceeding_type
+    definition_en: "Mutation (Namantaran) — registration of change in land ownership records."
+    definition_hi: "नामांतरण — भूमि स्वामित्व अभिलेखों में परिवर्तन का पंजीकरण।"
+    surface_forms:
+      hi: ["नामांतरण", "दाखिल खारिज", "नाम दर्ज"]
+      en: ["mutation", "namantaran", "transfer of records", "change of ownership records"]
+    preferred_term:
+      hi: "नामांतरण"
+      en: "mutation"
+    examples:
+      - {lang: hi, text: "नामांतरण हेतु आवेदन।", maps_to: PROCEEDING_MUTATION}
+      - {lang: en, text: "Application for mutation of land records.", maps_to: PROCEEDING_MUTATION}
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROCEEDING_PARTITION
+    category: proceeding_type
+    definition_en: "Partition (Bantawara) — division of jointly held land."
+    definition_hi: "बँटवारा — संयुक्त रूप से धारित भूमि का विभाजन।"
+    surface_forms:
+      hi: ["बँटवारा", "विभाजन", "बटवारा"]
+      en: ["partition", "division of property", "bantawara"]
+    preferred_term:
+      hi: "बँटवारा"
+      en: "partition"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROCEEDING_BOUNDARY_DISPUTE
+    category: proceeding_type
+    definition_en: "Boundary dispute between adjacent landholders."
+    definition_hi: "सीमा विवाद — आसन्न भूस्वामियों के बीच सीमा का विवाद।"
+    surface_forms:
+      hi: ["सीमा विवाद", "हद्दबन्दी", "सीमांकन विवाद"]
+      en: ["boundary dispute", "land boundary", "demarcation dispute"]
+    preferred_term:
+      hi: "सीमा विवाद"
+      en: "boundary dispute"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PARTY_PETITIONER
+    category: party_role
+    definition_en: "The party who files a petition or appeal."
+    definition_hi: "वह पक्ष जो याचिका या अपील दायर करता है।"
+    surface_forms:
+      hi: ["वादी", "याचिकाकर्ता", "आवेदक", "अपीलार्थी"]
+      en: ["petitioner", "plaintiff", "applicant", "appellant"]
+    preferred_term:
+      hi: "याचिकाकर्ता"
+      en: "petitioner"
+    examples: []
+    not_to_be_confused_with: [PARTY_RESPONDENT]
+    disambiguation: "In revenue cases, the party who initiates the proceeding."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PARTY_RESPONDENT
+    category: party_role
+    definition_en: "The party against whom the petition is filed."
+    definition_hi: "वह पक्ष जिसके विरुद्ध याचिका दायर की गई है।"
+    surface_forms:
+      hi: ["प्रतिवादी", "विपक्षी", "प्रत्यर्थी"]
+      en: ["respondent", "defendant", "opposite party"]
+    preferred_term:
+      hi: "प्रतिवादी"
+      en: "respondent"
+    examples: []
+    not_to_be_confused_with: [PARTY_PETITIONER]
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: DOC_ORDER
+    category: document_type
+    definition_en: "A court order issued during proceedings."
+    definition_hi: "कार्यवाही के दौरान जारी किया गया न्यायालय का आदेश।"
+    surface_forms:
+      hi: ["आदेश", "हुक्मनामा", "निर्देश"]
+      en: ["order", "direction", "decree"]
+    preferred_term:
+      hi: "आदेश"
+      en: "order"
+    examples: []
+    not_to_be_confused_with: [DOC_JUDGMENT]
+    disambiguation: "आदेश (order) is an interlocutory or procedural directive. DOC_JUDGMENT is the final determination of rights. Ambiguous word: आदेश can also mean 'instruction' in general Hindi — in legal context, it means court order."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: DOC_JUDGMENT
+    category: document_type
+    definition_en: "Final judgment determining the rights of the parties."
+    definition_hi: "पक्षों के अधिकारों का निर्धारण करने वाला अंतिम निर्णय।"
+    surface_forms:
+      hi: ["निर्णय", "फैसला", "अभिनिर्णय"]
+      en: ["judgment", "judgement", "decision", "finding"]
+    preferred_term:
+      hi: "निर्णय"
+      en: "judgment"
+    examples: []
+    not_to_be_confused_with: [DOC_ORDER]
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: DOC_PETITION
+    category: document_type
+    definition_en: "A formal written request to the court."
+    definition_hi: "न्यायालय को लिखित आवेदन पत्र।"
+    surface_forms:
+      hi: ["याचिका", "आवेदन", "प्रार्थना पत्र", "दरखास्त"]
+      en: ["petition", "application", "prayer", "writ petition"]
+    preferred_term:
+      hi: "याचिका"
+      en: "petition"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: DOC_APPEAL
+    category: proceeding_type
+    definition_en: "An appeal challenging a lower court's decision."
+    definition_hi: "निचली अदालत के निर्णय को चुनौती देने वाली अपील।"
+    surface_forms:
+      hi: ["अपील", "अपीलीय", "द्वितीय अपील"]
+      en: ["appeal", "first appeal", "second appeal"]
+    preferred_term:
+      hi: "अपील"
+      en: "appeal"
+    examples: []
+    not_to_be_confused_with: [PROC_REVISION]
+    disambiguation: "Appeal is a challenge on merits to a superior court. Distinguish from PROC_REVISION which is supervisory error correction."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: RECORD_KHATAUNI
+    category: land_record
+    definition_en: "Khatauni — land record register showing ownership and possession."
+    definition_hi: "खतौनी — भूमि स्वामित्व और कब्जे को दर्शाने वाला भूमि अभिलेख।"
+    surface_forms:
+      hi: ["खतौनी", "खाता"]
+      en: ["khatauni", "land register", "record of rights"]
+    preferred_term:
+      hi: "खतौनी"
+      en: "khatauni"
+    examples: []
+    not_to_be_confused_with: [RECORD_KHASRA]
+    disambiguation: "खतौनी is the ownership register. खसरा (khasra) is the field-wise cultivation register."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: RECORD_KHASRA
+    category: land_record
+    definition_en: "Khasra — field register showing crop, area, and cultivator details."
+    definition_hi: "खसरा — फसल, क्षेत्र और कृषक विवरण दर्शाने वाला खेत रजिस्टर।"
+    surface_forms:
+      hi: ["खसरा", "गिरदावरी"]
+      en: ["khasra", "field register", "cultivation register"]
+    preferred_term:
+      hi: "खसरा"
+      en: "khasra"
+    examples: []
+    not_to_be_confused_with: [RECORD_KHATAUNI]
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: RECORD_JAMABANDI
+    category: land_record
+    definition_en: "Jamabandi — periodic revenue record consolidating land ownership and rights."
+    definition_hi: "जमाबंदी — भूमि स्वामित्व और अधिकारों को समेकित करने वाला आवधिक राजस्व अभिलेख।"
+    surface_forms:
+      hi: ["जमाबंदी", "फर्द"]
+      en: ["jamabandi", "patwari record", "revenue record"]
+    preferred_term:
+      hi: "जमाबंदी"
+      en: "jamabandi"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_ADJOURNMENT
+    category: procedural
+    definition_en: "Adjournment — postponement of a hearing to a future date."
+    definition_hi: "तारीख — आगामी तारीख के लिए सुनवाई का स्थगन।"
+    surface_forms:
+      hi: ["तारीख", "स्थगन", "मुल्तवी", "अगली तारीख"]
+      en: ["adjournment", "postponement", "next date", "continued to"]
+    preferred_term:
+      hi: "तारीख"
+      en: "adjournment"
+    examples: []
+    not_to_be_confused_with: [STATUS_STAYED]
+    disambiguation: "तारीख here means adjournment/next date, not date in general. STATUS_STAYED is a legal stay by order; adjournment is a scheduling postponement."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_LIMITATION
+    category: procedural
+    definition_en: "Limitation period — the statutory time limit within which a case must be filed."
+    definition_hi: "परिसीमा अवधि — वैधानिक समय सीमा जिसके भीतर मामला दाखिल किया जाना चाहिए।"
+    surface_forms:
+      hi: ["परिसीमा", "समय सीमा", "कालातीत"]
+      en: ["limitation", "limitation period", "time-barred", "barred by limitation"]
+    preferred_term:
+      hi: "परिसीमा"
+      en: "limitation"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_JURISDICTION
+    category: procedural
+    definition_en: "Jurisdiction — the authority of a court to hear a particular case."
+    definition_hi: "अधिकारिता — किसी विशेष मामले को सुनने का न्यायालय का अधिकार।"
+    surface_forms:
+      hi: ["अधिकारिता", "क्षेत्राधिकार", "न्यायालय की शक्ति"]
+      en: ["jurisdiction", "territorial jurisdiction", "pecuniary jurisdiction"]
+    preferred_term:
+      hi: "अधिकारिता"
+      en: "jurisdiction"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_EX_PARTE
+    category: procedural
+    definition_en: "Ex-parte — proceedings conducted in the absence of one party."
+    definition_hi: "एकपक्षीय — एक पक्ष की अनुपस्थिति में की गई कार्यवाही।"
+    surface_forms:
+      hi: ["एकपक्षीय", "पक्षकार की अनुपस्थिति में"]
+      en: ["ex-parte", "ex parte", "one-sided", "in absentia"]
+    preferred_term:
+      hi: "एकपक्षीय"
+      en: "ex-parte"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PERSON_PATWARI
+    category: official_role
+    definition_en: "Patwari — village-level land records official."
+    definition_hi: "पटवारी — ग्राम स्तरीय भूमि अभिलेख अधिकारी।"
+    surface_forms:
+      hi: ["पटवारी", "लेखपाल"]
+      en: ["patwari", "lekhpal", "village accountant"]
+    preferred_term:
+      hi: "पटवारी"
+      en: "patwari"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PERSON_TEHSILDAR
+    category: official_role
+    definition_en: "Tehsildar — sub-district revenue officer."
+    definition_hi: "तहसीलदार — उप-जिला राजस्व अधिकारी।"
+    surface_forms:
+      hi: ["तहसीलदार", "नायब तहसीलदार"]
+      en: ["tehsildar", "naib tehsildar", "revenue officer"]
+    preferred_term:
+      hi: "तहसीलदार"
+      en: "tehsildar"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PERSON_SDM
+    category: official_role
+    definition_en: "Sub-Divisional Magistrate — revenue and administrative officer."
+    definition_hi: "उप-मंडल अधिकारी।"
+    surface_forms:
+      hi: ["उप-मंडल अधिकारी", "एसडीएम"]
+      en: ["SDM", "sub-divisional magistrate", "sub-divisional officer"]
+    preferred_term:
+      hi: "उप-मंडल अधिकारी"
+      en: "SDM"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_KHASRA_NUMBER
+    category: land_identifier
+    definition_en: "Khasra number — the unique identifier for a land parcel in revenue records."
+    definition_hi: "खसरा नंबर — राजस्व अभिलेखों में भूमि के टुकड़े का विशिष्ट पहचानकर्ता।"
+    surface_forms:
+      hi: ["खसरा नंबर", "खसरा क्रमांक", "भूमि नंबर"]
+      en: ["khasra number", "plot number", "survey number", "land parcel id"]
+    preferred_term:
+      hi: "खसरा नंबर"
+      en: "khasra number"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_VILLAGE
+    category: location
+    definition_en: "Village — the smallest administrative unit for land records."
+    definition_hi: "ग्राम — भूमि अभिलेखों की सबसे छोटी प्रशासनिक इकाई।"
+    surface_forms:
+      hi: ["ग्राम", "गांव", "मौजा"]
+      en: ["village", "gram", "mauza"]
+    preferred_term:
+      hi: "ग्राम"
+      en: "village"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_TEHSIL
+    category: location
+    definition_en: "Tehsil — a sub-district administrative division."
+    definition_hi: "तहसील — उप-जिला प्रशासनिक विभाग।"
+    surface_forms:
+      hi: ["तहसील", "तालुका"]
+      en: ["tehsil", "taluka", "sub-district"]
+    preferred_term:
+      hi: "तहसील"
+      en: "tehsil"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_DISTRICT
+    category: location
+    definition_en: "District — primary administrative division of a state."
+    definition_hi: "जिला — राज्य का प्राथमिक प्रशासनिक विभाजन।"
+    surface_forms:
+      hi: ["जिला", "जनपद"]
+      en: ["district", "zila"]
+    preferred_term:
+      hi: "जिला"
+      en: "district"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_NOTICE
+    category: procedural
+    definition_en: "Notice — a legal notification issued to parties."
+    definition_hi: "नोटिस — पक्षकारों को जारी की गई कानूनी सूचना।"
+    surface_forms:
+      hi: ["नोटिस", "सूचना", "समन"]
+      en: ["notice", "summons", "notification", "legal notice"]
+    preferred_term:
+      hi: "नोटिस"
+      en: "notice"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_VAKALATNAMA
+    category: procedural
+    definition_en: "Vakalatnama — the authorization document appointing an advocate."
+    definition_hi: "वकालतनामा — अधिवक्ता नियुक्त करने का प्राधिकरण दस्तावेज।"
+    surface_forms:
+      hi: ["वकालतनामा"]
+      en: ["vakalatnama", "power of attorney (legal)", "advocate authorization"]
+    preferred_term:
+      hi: "वकालतनामा"
+      en: "vakalatnama"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_REVISION
+    category: proceeding_type
+    definition_en: "Revision — a supervisory jurisdiction proceeding to correct legal errors."
+    definition_hi: "पुनरीक्षण — कानूनी त्रुटियों को सुधारने के लिए पर्यवेक्षी क्षेत्राधिकार की कार्यवाही।"
+    surface_forms:
+      hi: ["पुनरीक्षण", "रिवीजन"]
+      en: ["revision", "revisional jurisdiction", "revisional application"]
+    preferred_term:
+      hi: "पुनरीक्षण"
+      en: "revision"
+    examples: []
+    not_to_be_confused_with: [DOC_APPEAL]
+    disambiguation: "Revision is supervisory (error correction), not a fresh appeal on merits."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_TENURE
+    category: land_right
+    definition_en: "Land tenure — the legal right under which land is held."
+    definition_hi: "भू-धारण — भूमि धारण का कानूनी अधिकार।"
+    surface_forms:
+      hi: ["भू-धारण", "भूमि अधिकार", "काश्तकारी"]
+      en: ["land tenure", "tenancy", "land right", "occupancy right"]
+    preferred_term:
+      hi: "भू-धारण"
+      en: "land tenure"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_CONDONATION
+    category: procedural
+    definition_en: "Condonation of delay — court's acceptance of a late filing despite exceeding the limitation period."
+    definition_hi: "विलम्ब क्षमा — परिसीमा अवधि समाप्त होने के बाद भी न्यायालय द्वारा देरी स्वीकार करना।"
+    surface_forms:
+      hi: ["विलम्ब क्षमा", "देरी की माफी", "विलंब माफी"]
+      en: ["condonation of delay", "excuse of delay", "condone delay"]
+    preferred_term:
+      hi: "विलम्ब क्षमा"
+      en: "condonation of delay"
+    examples: []
+    not_to_be_confused_with: [PROC_LIMITATION]
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_INTERLOCUTORY
+    category: procedural
+    definition_en: "Interlocutory application — a request made during ongoing proceedings."
+    definition_hi: "मध्यवर्ती आवेदन — चल रही कार्यवाही के दौरान किया गया अनुरोध।"
+    surface_forms:
+      hi: ["मध्यवर्ती आवेदन", "प्रारंभिक आवेदन"]
+      en: ["interlocutory application", "IA", "interim application", "miscellaneous application"]
+    preferred_term:
+      hi: "मध्यवर्ती आवेदन"
+      en: "interlocutory application"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_EVIDENCE
+    category: procedural
+    definition_en: "Evidence — material submitted to establish facts in proceedings."
+    definition_hi: "साक्ष्य — कार्यवाही में तथ्यों को स्थापित करने के लिए प्रस्तुत सामग्री।"
+    surface_forms:
+      hi: ["साक्ष्य", "सबूत", "प्रमाण"]
+      en: ["evidence", "proof", "documentary evidence", "oral evidence"]
+    preferred_term:
+      hi: "साक्ष्य"
+      en: "evidence"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_DECREE
+    category: document_type
+    definition_en: "Decree — formal expression of the court's adjudication of rights."
+    definition_hi: "डिक्री — अधिकारों के न्यायालय के निर्णय की औपचारिक अभिव्यक्ति।"
+    surface_forms:
+      hi: ["डिक्री", "आज्ञप्ति", "हुक्मनामा"]
+      en: ["decree", "final decree", "preliminary decree"]
+    preferred_term:
+      hi: "डिक्री"
+      en: "decree"
+    examples: []
+    not_to_be_confused_with: [DOC_ORDER]
+    disambiguation: "A decree formally adjudicates rights. An order is a procedural direction."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_CONTEMPT
+    category: procedural
+    definition_en: "Contempt of court — disobedience of a court order."
+    definition_hi: "न्यायालय की अवमानना — न्यायालय के आदेश की अवज्ञा।"
+    surface_forms:
+      hi: ["अवमानना", "न्यायालय की अवमानना"]
+      en: ["contempt", "contempt of court", "disobedience of order"]
+    preferred_term:
+      hi: "अवमानना"
+      en: "contempt"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: LAND_ACQUISITION
+    category: proceeding_type
+    definition_en: "Land acquisition proceedings by the government."
+    definition_hi: "सरकार द्वारा भूमि अधिग्रहण की कार्यवाही।"
+    surface_forms:
+      hi: ["भूमि अधिग्रहण", "भूमि अवाप्ति"]
+      en: ["land acquisition", "compulsory acquisition", "eminent domain"]
+    preferred_term:
+      hi: "भूमि अधिग्रहण"
+      en: "land acquisition"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_CERTIFIED_COPY
+    category: procedural
+    definition_en: "Certified copy of a court document."
+    definition_hi: "न्यायालय दस्तावेज की प्रमाणित प्रति।"
+    surface_forms:
+      hi: ["प्रमाणित प्रति", "नकल", "सर्टिफाइड कॉपी"]
+      en: ["certified copy", "attested copy", "true copy"]
+    preferred_term:
+      hi: "प्रमाणित प्रति"
+      en: "certified copy"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_COST
+    category: procedural
+    definition_en: "Court costs imposed on a party."
+    definition_hi: "पक्ष पर लगाई गई न्यायालय की लागत।"
+    surface_forms:
+      hi: ["खर्चा", "व्यय", "कॉस्ट"]
+      en: ["costs", "court costs", "cost imposed", "cost awarded"]
+    preferred_term:
+      hi: "खर्चा"
+      en: "costs"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: PROC_REMAND
+    category: procedural
+    definition_en: "Remand — sending the case back to a lower court for fresh consideration."
+    definition_hi: "प्रेषण — मामले को नए सिरे से विचार के लिए निचली अदालत को वापस भेजना।"
+    surface_forms:
+      hi: ["प्रेषण", "वापस भेजना", "रिमांड"]
+      en: ["remand", "remitted", "sent back", "returned to lower court"]
+    preferred_term:
+      hi: "प्रेषण"
+      en: "remand"
+    examples: []
+    not_to_be_confused_with: []
+    disambiguation: ""
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
+
+  - concept_id: DOC_ORDER_SHEET
+    category: document_type
+    definition_en: "Order sheet — the running record of all orders passed in a case."
+    definition_hi: "आदेश पत्रक — मामले में पारित सभी आदेशों का चल रहा अभिलेख।"
+    surface_forms:
+      hi: ["आदेश पत्रक", "रोजनामचा", "कार्यवाही पत्रक"]
+      en: ["order sheet", "proceeding sheet", "daily order sheet", "roznama"]
+    preferred_term:
+      hi: "आदेश पत्रक"
+      en: "order sheet"
+    examples: []
+    not_to_be_confused_with: [DOC_ORDER]
+    disambiguation: "Order sheet is the register of all orders. A single order (DOC_ORDER) is one entry on the sheet."
+    review: {reviewed_by: null, reviewed_on: null, status: PLACEHOLDER}
