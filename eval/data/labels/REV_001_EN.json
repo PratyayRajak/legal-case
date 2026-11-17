@@ -1,0 +1,101 @@
+{
+  "doc_id": "REV_001_EN",
+  "pair_id": "CASE_PAIR_001",
+  "doc_language": "en",
+  "scan_quality": "digital",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "case",
+        "number": "104",
+        "year": 2024,
+        "original_string": "104 / 2024"
+      },
+      "page": 1,
+      "snippet": "Case No.: 104 / 2024"
+    },
+    "court_name": {
+      "found": true,
+      "value": "SDM Sadar District Lucknow",
+      "page": 1,
+      "snippet": "Court of Sub-Divisional Magistrate / S.D.M. Sadar, District Lucknow"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "District Lucknow"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "Mutation of Land Records"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "mutation",
+      "page": 1,
+      "snippet": "Mutation of Land Records"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "Ram Kumar Sharma",
+          "script": "latin",
+          "transliteration_key": "ram_kumar_sarma"
+        }
+      ],
+      "page": 1,
+      "snippet": "Petitioner: Ram Kumar Sharma"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "Mohan Lal Verma",
+          "script": "latin",
+          "transliteration_key": "mohan_lal_varma"
+        }
+      ],
+      "page": 1,
+      "snippet": "Respondent: Mohan Lal Verma"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-01-15",
+        "precision": "full",
+        "original_string": "15/01/2024"
+      },
+      "page": 1,
+      "snippet": "Date of Filing: 15/01/2024"
+    },
+    "next_hearing_date": {
+      "found": false,
+      "value": null
+    },
+    "current_status": {
+      "found": true,
+      "value": "rejected",
+      "page": 1,
+      "snippet": "this petition is hereby dismissed."
+    },
+    "rejection_reason": {
+      "found": true,
+      "value": "The petitioner failed to produce certified copies of revenue records (khatauni).",
+      "page": 1,
+      "snippet": "The petitioner failed to produce certified copies of revenue records (khatauni)."
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "cannot_evaluate"
+  }
+}

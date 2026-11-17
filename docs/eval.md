@@ -8,8 +8,19 @@ rule precision/recall, and cross-language consistency.
 ## Running Evaluation
 
 ```bash
-python eval/run_eval.py --data-dir eval/data --output-dir eval/reports
+# Run evaluation across all documents in eval/data/docs and save report
+python eval/run_eval.py
+
+# Run evaluation with automated CI quality gate enforcement
+python eval/run_eval.py --ci-gate
 ```
+
+## Normalizers (`eval/normalize.py`)
+
+- **Hindi Numerals**: Converts Devanagari numerals (०–९) to standard ASCII (0–9).
+- **Date Normalization**: Parses multi-format bilingual dates (DD/MM/YYYY, Hindi/English word months, ISO dates) to `CanonicalDate`.
+- **Person Name Transliteration**: Generates phonetic normalization keys, strips honorifics (श्री, Shri, Mr., etc.), and performs cross-script fuzzy matching.
+- **Case Numbers**: Canonicalizes case number patterns into structured `CaseNumber` models.
 
 ## Metrics
 

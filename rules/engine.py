@@ -11,6 +11,7 @@ from __future__ import annotations
 from datetime import date
 from typing import Any
 
+import rules.checks  # noqa: F401
 from rules.loader import active_rules, get_check
 from rules.models import Rule, RuleCheckResult, RuleResult
 

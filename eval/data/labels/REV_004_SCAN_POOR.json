@@ -1,0 +1,99 @@
+{
+  "doc_id": "REV_004_SCAN_POOR",
+  "pair_id": "CASE_PAIR_004",
+  "doc_language": "hi",
+  "scan_quality": "poor",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "appeal",
+        "number": "55",
+        "year": 2022,
+        "original_string": "55/2022"
+      },
+      "page": 1,
+      "snippet": "अपील संख्या: 55/2022"
+    },
+    "court_name": {
+      "found": true,
+      "value": "ADM गोरखपुर",
+      "page": 1,
+      "snippet": "न्यायालय अपर जिलाधिकारी"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "गोरखपुर"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "राजस्व अपील"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "other",
+      "page": 1,
+      "snippet": "राजस्व अपील"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "जगदीश प्रसाद मिश्र",
+          "script": "devanagari",
+          "transliteration_key": "jagdis_prasad_misra"
+        }
+      ],
+      "page": 1,
+      "snippet": "अपीलार्थी: जगदीश प्रसाद मिश्र"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "राज्य उत्तर प्रदेश",
+          "script": "devanagari",
+          "transliteration_key": "rajya_uttar_prades"
+        }
+      ],
+      "page": 1,
+      "snippet": "प्रत्यर्थी: राज्य उत्तर प्रदेश"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2022-03-04",
+        "precision": "full",
+        "original_string": "04-03-2022"
+      },
+      "page": 1,
+      "snippet": "दाखिल तिथि: 04-03-2022"
+    },
+    "next_hearing_date": {
+      "found": false,
+      "value": null
+    },
+    "current_status": {
+      "found": true,
+      "value": "allowed",
+      "page": 1,
+      "snippet": "अपील स्वीकार की जाती है।"
+    },
+    "rejection_reason": {
+      "found": false,
+      "value": null
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "cannot_evaluate"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "doc_id": "REV_003_SCAN_GOOD",
+  "pair_id": "CASE_PAIR_003",
+  "doc_language": "hi",
+  "scan_quality": "good",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "case",
+        "number": "312",
+        "year": 2023,
+        "original_string": "312 / 2023"
+      },
+      "page": 1,
+      "snippet": "वाद सं.: 312 / 2023"
+    },
+    "court_name": {
+      "found": true,
+      "value": "तहसीलदार सदर वाराणसी",
+      "page": 1,
+      "snippet": "न्यायालय तहसीलदार, सदर, वाराणसी"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "वाराणसी"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "सीमांकन एवं सीमा विवाद"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "boundary_dispute",
+      "page": 1,
+      "snippet": "सीमा विवाद"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "केदारनाथ यादव",
+          "script": "devanagari",
+          "transliteration_key": "kedarnath_yadav"
+        }
+      ],
+      "page": 1,
+      "snippet": "वादी: केदारनाथ यादव"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "शिवबालक यादव",
+          "script": "devanagari",
+          "transliteration_key": "sivabalak_yadav"
+        }
+      ],
+      "page": 1,
+      "snippet": "प्रतिवादी: शिवबालक यादव"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2023-08-12",
+        "precision": "full",
+        "original_string": "12-08-2023"
+      },
+      "page": 1,
+      "snippet": "दाखिल तिथि: 12-08-2023"
+    },
+    "next_hearing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-06-10",
+        "precision": "full",
+        "original_string": "10-06-2024"
+      },
+      "page": 1,
+      "snippet": "आगामी सुनवाई 10-06-2024 को नियत की जाती है।"
+    },
+    "current_status": {
+      "found": true,
+      "value": "pending",
+      "page": 1,
+      "snippet": "पत्रावली विचाराधीन है।"
+    },
+    "rejection_reason": {
+      "found": false,
+      "value": null
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "pass"
+  }
+}

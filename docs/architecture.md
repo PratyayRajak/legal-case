@@ -52,9 +52,9 @@ procedural rule compliance.
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| 1 | Skeleton + schemas + interfaces | ✅ In Progress |
-| 2 | Glossary + eval harness | 🔲 Planned |
-| 3 | Ingest + OCR + PII | 🔲 Planned |
+| 1 | Skeleton + schemas + interfaces | ✅ Done |
+| 2 | Glossary + eval harness + synthetic data | ✅ Done |
+| 3 | Ingest + OCR + PII | 🔲 Next |
 | 4 | Chunking + retrieval | 🔲 Planned |
 | 5 | Field extraction | 🔲 Planned |
 | 6 | Normalization + conflicts | 🔲 Planned |

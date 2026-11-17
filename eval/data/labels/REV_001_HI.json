@@ -1,0 +1,101 @@
+{
+  "doc_id": "REV_001_HI",
+  "pair_id": "CASE_PAIR_001",
+  "doc_language": "hi",
+  "scan_quality": "digital",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "case",
+        "number": "104",
+        "year": 2024,
+        "original_string": "104 / 2024"
+      },
+      "page": 1,
+      "snippet": "वाद संख्या: 104 / 2024"
+    },
+    "court_name": {
+      "found": true,
+      "value": "उप-जिलाधिकारी सदर लखनऊ",
+      "page": 1,
+      "snippet": "न्यायालय उप-जिलाधिकारी / परगनाधिकारी, सदर, जनपद लखनऊ"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "जनपद लखनऊ"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "नामांतरण"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "mutation",
+      "page": 1,
+      "snippet": "नामांतरण"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "राम कुमार शर्मा",
+          "script": "devanagari",
+          "transliteration_key": "ram_kumar_sarma"
+        }
+      ],
+      "page": 1,
+      "snippet": "वादी: राम कुमार शर्मा"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "मोहन लाल वर्मा",
+          "script": "devanagari",
+          "transliteration_key": "mohan_lal_varma"
+        }
+      ],
+      "page": 1,
+      "snippet": "प्रतिवादी: मोहन लाल वर्मा"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-01-15",
+        "precision": "full",
+        "original_string": "15/01/2024"
+      },
+      "page": 1,
+      "snippet": "दायर करने की तिथि: 15/01/2024"
+    },
+    "next_hearing_date": {
+      "found": false,
+      "value": null
+    },
+    "current_status": {
+      "found": true,
+      "value": "rejected",
+      "page": 1,
+      "snippet": "आवेदन खारिज किया जाता है।"
+    },
+    "rejection_reason": {
+      "found": true,
+      "value": "वादी द्वारा आवश्यक राजस्व खतौनी एवं प्रमाणित प्रति प्रस्तुत नहीं की गई।",
+      "page": 1,
+      "snippet": "वादी द्वारा आवश्यक राजस्व खतौनी एवं प्रमाणित प्रति प्रस्तुत नहीं की गई।"
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "cannot_evaluate"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "doc_id": "REV_005_RULE_INCONSISTENT",
+  "pair_id": "CASE_PAIR_005",
+  "doc_language": "en",
+  "scan_quality": "digital",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "case",
+        "number": "999",
+        "year": 2024,
+        "original_string": "999 / 2024"
+      },
+      "page": 1,
+      "snippet": "Case No.: 999 / 2024"
+    },
+    "court_name": {
+      "found": true,
+      "value": "DM Prayagraj",
+      "page": 1,
+      "snippet": "DISTRICT MAGISTRATE, PRAYAGRAJ"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "PRAYAGRAJ"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "Land Acquisition"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "land_acquisition",
+      "page": 1,
+      "snippet": "Land Acquisition"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "Ankit Verma",
+          "script": "latin",
+          "transliteration_key": "ankit_verma"
+        }
+      ],
+      "page": 1,
+      "snippet": "Petitioner: Ankit Verma"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "State of UP",
+          "script": "latin",
+          "transliteration_key": "state_of_up"
+        }
+      ],
+      "page": 1,
+      "snippet": "Respondent: State of UP"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-06-01",
+        "precision": "full",
+        "original_string": "2024-06-01"
+      },
+      "page": 1,
+      "snippet": "Filing Date: 2024-06-01"
+    },
+    "next_hearing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-01-10",
+        "precision": "full",
+        "original_string": "2024-01-10"
+      },
+      "page": 1,
+      "snippet": "Next Hearing Date: 2024-01-10"
+    },
+    "current_status": {
+      "found": true,
+      "value": "pending",
+      "page": 1,
+      "snippet": "Status: Pending"
+    },
+    "rejection_reason": {
+      "found": false,
+      "value": null
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "fail"
+  }
+}

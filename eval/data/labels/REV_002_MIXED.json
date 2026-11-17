@@ -1,0 +1,105 @@
+{
+  "doc_id": "REV_002_MIXED",
+  "pair_id": "CASE_PAIR_002",
+  "doc_language": "mixed",
+  "scan_quality": "digital",
+  "case_type": "revenue",
+  "fields": {
+    "case_number": {
+      "found": true,
+      "value": {
+        "case_type": "case",
+        "number": "215",
+        "year": 2023,
+        "original_string": "215/2023"
+      },
+      "page": 1,
+      "snippet": "Case No.: 215/2023"
+    },
+    "court_name": {
+      "found": true,
+      "value": "SDO Mohanlalganj",
+      "page": 1,
+      "snippet": "SUB-DIVISIONAL OFFICER, TEHSIL MOHANLALGANJ"
+    },
+    "court_level": {
+      "found": true,
+      "value": "district",
+      "page": 1,
+      "snippet": "TEHSIL MOHANLALGANJ"
+    },
+    "case_type": {
+      "found": true,
+      "value": "revenue",
+      "page": 1,
+      "snippet": "Section 116 Revenue Code"
+    },
+    "proceeding_type": {
+      "found": true,
+      "value": "partition",
+      "page": 1,
+      "snippet": "Partition Suit"
+    },
+    "petitioners": {
+      "found": true,
+      "value": [
+        {
+          "original": "Suresh Chandra Pandey",
+          "script": "latin",
+          "transliteration_key": "sures_candra_pandey"
+        }
+      ],
+      "page": 1,
+      "snippet": "Applicant: Suresh Chandra Pandey"
+    },
+    "respondents": {
+      "found": true,
+      "value": [
+        {
+          "original": "Ramesh Chandra Pandey",
+          "script": "latin",
+          "transliteration_key": "rames_candra_pandey"
+        }
+      ],
+      "page": 1,
+      "snippet": "Opposite Party: Ramesh Chandra Pandey"
+    },
+    "filing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2023-09-10",
+        "precision": "full",
+        "original_string": "10-09-2023"
+      },
+      "page": 1,
+      "snippet": "Filing Date: 10-09-2023"
+    },
+    "next_hearing_date": {
+      "found": true,
+      "value": {
+        "iso_date": "2024-05-25",
+        "precision": "full",
+        "original_string": "25-05-2024"
+      },
+      "page": 1,
+      "snippet": "Next Date of Hearing: 25-05-2024"
+    },
+    "current_status": {
+      "found": true,
+      "value": "pending",
+      "page": 1,
+      "snippet": "Status: Pending / विचाराधीन"
+    },
+    "rejection_reason": {
+      "found": false,
+      "value": null
+    }
+  },
+  "rule_expectations": {
+    "R001_PLACEHOLDER": "cannot_evaluate",
+    "R002_PLACEHOLDER": "pass",
+    "R003_PLACEHOLDER": "pass",
+    "R004_PLACEHOLDER": "cannot_evaluate",
+    "R005_PLACEHOLDER": "pass"
+  }
+}
