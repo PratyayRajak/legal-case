@@ -18,12 +18,10 @@ class TestSettings:
     def test_missing_secret_key_raises(self, monkeypatch):
         monkeypatch.delenv("SECRET_KEY", raising=False)
         monkeypatch.setenv("DATABASE_URL", "postgresql://u:p@localhost/db")
-        import importlib
 
         from pydantic import ValidationError
 
         import config
         with pytest.raises(ValidationError):
-            importlib.reload(config)
-            # Force a fresh settings instantiation
-            config.Settings()
+            # Pass _env_file=None so it doesn't pick up .env from working dir
+            config.Settings(_env_file=None)
