@@ -57,12 +57,27 @@ procedural rule compliance.
 | 3 | Ingest + OCR + PII | ✅ Done |
 | 4 | Chunking + retrieval | ✅ Done |
 | 5 | Field extraction | ✅ Done |
-| 6 | Normalization + conflicts | 🔲 Next |
-| 7 | Rules engine + import | 🔲 Planned |
+| 6 | Normalization + conflicts | ✅ Done |
+| 7 | Rules engine + import | 🔲 Next |
 | 8 | API + background jobs | 🔲 Planned |
 | 9 | Frontend | 🔲 Planned |
 | 10 | Q&A + eval | 🔲 Planned |
 | 11 | Hardening + deployment | 🔲 Planned |
+
+## Phase 6 Implementation Summary
+
+- **Canonical Normalizer (`pipeline/normalizer.py`)**:
+  - Maps Hindi and English surface forms to canonical concept IDs in `glossary/concepts.yaml`.
+  - Validates and coerces enums (`CaseStatus`, `CourtLevel`, `ProceedingType`).
+  - Dates and person names enriched with phonetic transliteration keys (`create_person_name`).
+  - Unmappable or ambiguous terms are flagged with `needs_review = True`, never guessed.
+- **Cross-Document Conflict Detector (`pipeline/conflicts.py`)**:
+  - Scans multi-page case records to detect:
+    - Case number mismatches/typos across orders and annexures (`blocking`).
+    - Contradictory filing/hearing dates across petition and order sheets (`warning`).
+    - Status contradictions (e.g., active stay vs. dismissal) across dates (`warning`).
+    - Party name variations across documents using `fuzzy_name_match` (`warning`).
+  - Generates structured bilingual conflict items with dual citations (`evidence_a`, `evidence_b`).
 
 ## Phase 4 Implementation Summary
 

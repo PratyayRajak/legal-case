@@ -8,9 +8,11 @@ from __future__ import annotations
 from pipeline.assembler import assemble_revenue_brief
 from pipeline.chunker import StructureAwareChunker
 from pipeline.classifier import CourtDocumentClassifier
+from pipeline.conflicts import CrossDocumentConflictDetector
 from pipeline.extractor import CanonicalFieldExtractor
 from pipeline.ingest import ingest_pdf
 from pipeline.nodes.base import PipelineNode, PipelineState
+from pipeline.normalizer import CanonicalNormalizer
 from pipeline.ocr_engine import HybridCourtOCREngine
 from pipeline.pii_masker import IndianCourtPIIMasker
 from pipeline.retriever import HybridRetriever
@@ -213,8 +215,20 @@ class NormalizeNode(PipelineNode):
 
     node_name = "normalize"
 
+    def __init__(self, normalizer: CanonicalNormalizer | None = None) -> None:
+        self.normalizer = normalizer or CanonicalNormalizer()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "normalize_status": "stub"}
+        extracted = state.get("extracted_fields", {})
+        if not extracted:
+            return {**state, "normalize_status": "skipped", "error": "No extracted_fields in state"}
+
+        normalized = self.normalizer.normalize_all(extracted)
+        return {
+            **state,
+            "extracted_fields": normalized,
+            "normalize_status": "completed",
+        }
 
 
 class ConflictCheckNode(PipelineNode):
@@ -222,8 +236,37 @@ class ConflictCheckNode(PipelineNode):
 
     node_name = "conflict_check"
 
+    def __init__(self, detector: CrossDocumentConflictDetector | None = None) -> None:
+        self.detector = detector or CrossDocumentConflictDetector()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "conflicts": []}
+        masked_pages = state.get("masked_pages")
+        ocr_result = state.get("ocr_result")
+        extracted_fields = state.get("extracted_fields", {})
+        doc_id = str(state.get("doc_id", "doc"))
+
+        pages_text: dict[int, str] = {}
+        if masked_pages:
+            for mp in masked_pages:
+                pages_text[mp.page_number] = mp.masked_text
+        elif ocr_result:
+            for pr in ocr_result.page_results:
+                pages_text[pr.page_number] = pr.full_text
+
+        report = self.detector.detect_conflicts(
+            pages_text=pages_text,
+            extracted_fields=extracted_fields,
+            doc_id=doc_id,
+        )
+
+        return {
+            **state,
+            "conflict_report": report,
+            "conflicts": report.conflicts,
+            "total_conflicts": report.total_conflicts,
+            "has_blocking_conflicts": report.has_blocking,
+            "conflict_status": "completed",
+        }
 
 
 class RulesCheckNode(PipelineNode):

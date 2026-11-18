@@ -247,3 +247,40 @@ class RevenueCaseBrief(BaseModel):
 
     # Mandatory disclaimer — present on every export
     disclaimer: str = "AI-assisted summary. Verify against the source document."
+
+
+class ConflictSeverity(str, Enum):
+    blocking = "blocking"
+    warning = "warning"
+    info = "info"
+
+
+class ConflictType(str, Enum):
+    date_mismatch = "date_mismatch"
+    name_discrepancy = "name_discrepancy"
+    status_contradiction = "status_contradiction"
+    case_number_mismatch = "case_number_mismatch"
+    other = "other"
+
+
+class ConflictItem(BaseModel):
+    """A flagged cross-document inconsistency with dual citations."""
+
+    conflict_id: str
+    conflict_type: ConflictType
+    field_name: str
+    description_en: str
+    description_hi: str
+    evidence_a: Citation
+    evidence_b: Citation
+    severity: ConflictSeverity = ConflictSeverity.warning
+
+
+class ConflictReport(BaseModel):
+    """Consolidated conflict report for a case file."""
+
+    doc_id: str
+    conflicts: list[ConflictItem] = Field(default_factory=list)
+    total_conflicts: int = 0
+    has_blocking: bool = False
+
