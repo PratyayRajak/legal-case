@@ -12,6 +12,7 @@ from datetime import date
 from typing import Any
 
 import rules.checks  # noqa: F401
+from rules.evaluator import evaluate_condition
 from rules.loader import active_rules, get_check
 from rules.models import Rule, RuleCheckResult, RuleResult
 
@@ -95,12 +96,29 @@ class RulesEngine:
                 message_en=rule.message_en if result == RuleResult.fail else "Rule complied with.",
             )
 
-        # No check function registered — cannot evaluate
+        # Evaluate declarative rule logic if present
+        if rule.logic:
+            try:
+                passed = evaluate_condition(rule.logic, fields)
+                result = RuleResult.pass_ if passed else RuleResult.fail
+            except Exception:
+                result = RuleResult.cannot_evaluate
+
+            return RuleCheckResult(
+                rule_id=rule.id,
+                rule_version=rule.id,
+                result=result,
+                severity=rule.severity,
+                message_hi=rule.message_hi if result == RuleResult.fail else "नियम का अनुपालन किया गया।",
+                message_en=rule.message_en if result == RuleResult.fail else "Rule complied with.",
+            )
+
+        # No check function or logic registered — cannot evaluate
         return RuleCheckResult(
             rule_id=rule.id,
             rule_version=rule.id,
             result=RuleResult.cannot_evaluate,
             severity=rule.severity,
-            message_hi="कोई जाँच कार्य पंजीकृत नहीं।",
-            message_en="No check function registered for this rule.",
+            message_hi="कोई जाँच कार्य या तर्क पंजीकृत नहीं।",
+            message_en="No check function or logic registered for this rule.",
         )

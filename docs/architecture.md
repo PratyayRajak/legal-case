@@ -58,11 +58,25 @@ procedural rule compliance.
 | 4 | Chunking + retrieval | ✅ Done |
 | 5 | Field extraction | ✅ Done |
 | 6 | Normalization + conflicts | ✅ Done |
-| 7 | Rules engine + import | 🔲 Next |
-| 8 | API + background jobs | 🔲 Planned |
+| 7 | Rules engine + import | ✅ Done |
+| 8 | API + background jobs | 🔲 Next |
 | 9 | Frontend | 🔲 Planned |
 | 10 | Q&A + eval | 🔲 Planned |
 | 11 | Hardening + deployment | 🔲 Planned |
+
+## Phase 7 Implementation Summary
+
+- **Declarative Logic Evaluator (`rules/evaluator.py`)**:
+  - Language-neutral logic evaluator running on canonical field dictionaries.
+  - Supports atomic operators (`equals`, `not_equals`, `in`, `not_in`, `exists`, `is_null`), comparisons (`greater_than`, `less_than`, `between`), combinators (`and`, `or`, `not`), and rule implications (`if: <cond>, require: <cond>`).
+- **Rules Engine Integration (`rules/engine.py`)**:
+  - Fallback from hardcoded checks to declarative rule logic.
+  - Missing or unverified fields strictly return `cannot_evaluate`.
+- **Hindi Rule Importer & Legal Review Sheet (`scripts/import_rules.py`)**:
+  - Ingests raw Hindi procedural rules from CSV / Markdown.
+  - Drafts structured language-neutral logic with bilingual messages.
+  - Generates Markdown review sheets for legal expert verification.
+  - Strict promotion gate: rules require legal expert verification (`verified_by`), complete test cases covering `pass`, `fail`, and `cannot_evaluate`, and glossary concept validation.
 
 ## Phase 6 Implementation Summary
 

@@ -16,6 +16,7 @@ from pipeline.normalizer import CanonicalNormalizer
 from pipeline.ocr_engine import HybridCourtOCREngine
 from pipeline.pii_masker import IndianCourtPIIMasker
 from pipeline.retriever import HybridRetriever
+from rules.engine import RulesEngine
 
 
 class IngestNode(PipelineNode):
@@ -274,8 +275,21 @@ class RulesCheckNode(PipelineNode):
 
     node_name = "rules_check"
 
+    def __init__(self, engine: RulesEngine | None = None) -> None:
+        self.engine = engine or RulesEngine()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "rules_results": []}
+        extracted = state.get("extracted_fields", {})
+        if not extracted:
+            return {**state, "rules_results": [], "rules_status": "skipped"}
+
+        rule_results = self.engine.evaluate(canonical_fields=extracted)
+        return {
+            **state,
+            "rules_results": rule_results,
+            "total_rules_evaluated": len(rule_results),
+            "rules_status": "completed",
+        }
 
 
 class ConfidenceScoreNode(PipelineNode):
