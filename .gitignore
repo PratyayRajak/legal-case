@@ -79,3 +79,9 @@ Thumbs.db
 
 # Storage / uploads
 data/uploads/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+*.log

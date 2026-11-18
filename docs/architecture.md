@@ -60,9 +60,26 @@ procedural rule compliance.
 | 6 | Normalization + conflicts | ✅ Done |
 | 7 | Rules engine + import | ✅ Done |
 | 8 | API + background jobs | ✅ Done |
-| 9 | Frontend | 🔲 Next |
-| 10 | Q&A + eval | 🔲 Planned |
+| 9 | Frontend | ✅ Done |
+| 10 | Q&A + eval | 🔲 Next |
 | 11 | Hardening + deployment | 🔲 Planned |
+
+## Phase 9 Implementation Summary
+
+- **Next.js & React Frontend (`frontend/`)**:
+  - Full TypeScript & Tailwind CSS web application configured with strict typing.
+  - Bilingual UI Context (`LanguageContext.tsx`) with instant toggle between English and Hindi (`hi` / `en`).
+  - Persistent legal disclaimer banner on top:
+    > *"AI-assisted summary. Verify against the source document."*
+- **Split-Screen Interactive Layout (`50% / 50%`)**:
+  - **Left Pane (`DocumentViewer.tsx`)**: PDF page viewer with pagination, active citation jump, and highlighted source evidence snippet banners.
+  - **Right Pane Tabbed Workspace**:
+    - **Case Brief Tab (`CaseBriefViewer.tsx`)**: Canonical case identity, parties (with transliteration keys), timeline, status, confidence chips, clickable citation links, and user correction modal.
+    - **Rule Compliance Tab (`RulesPanel.tsx`)**: Deterministic rules engine report displaying the original Hindi rule text (`text_hi`) as legal authority, result badge (`PASS` / `FAIL` / `CANNOT_EVALUATE`), and bilingual explanations.
+    - **Conflict Report Tab (`ConflictPanel.tsx`)**: Dual side-by-side evidence viewer (`Evidence A` vs `Evidence B`) for cross-document inconsistencies with severity badges.
+    - **Grounded Q&A Tab (`QAPanel.tsx`)**: File-grounded chat interface with verifiable page citations.
+- **Upload & Progress Tracker**:
+  - Drag-and-drop PDF dropzone with real-time 10-stage pipeline progress polling.
 
 ## Phase 8 Implementation Summary
 
