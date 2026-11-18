@@ -46,3 +46,24 @@ def all_concept_ids() -> list[str]:
 def glossary_version() -> str:
     """Return the glossary version string."""
     return str(load_glossary().get("version", "unknown"))
+
+
+class GlossaryLoader:
+    """Class wrapper for glossary queries and concept mapping."""
+
+    def __init__(self, path: str | None = None) -> None:
+        self.path = path
+        self._data = load_glossary(path)
+
+    def get_concept(self, concept_id: str) -> dict[str, Any] | None:
+        return get_concept(concept_id)
+
+    def get_surface_forms(self, concept_id: str, language: str) -> list[str]:
+        return get_surface_forms(concept_id, language)
+
+    def all_concept_ids(self) -> list[str]:
+        return all_concept_ids()
+
+    def version(self) -> str:
+        return glossary_version()
+

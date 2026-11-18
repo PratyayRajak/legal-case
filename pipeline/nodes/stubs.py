@@ -5,10 +5,13 @@ Full implementations are built in Phases 3-6.
 """
 from __future__ import annotations
 
+from pipeline.chunker import StructureAwareChunker
+from pipeline.classifier import CourtDocumentClassifier
 from pipeline.ingest import ingest_pdf
 from pipeline.nodes.base import PipelineNode, PipelineState
 from pipeline.ocr_engine import HybridCourtOCREngine
 from pipeline.pii_masker import IndianCourtPIIMasker
+from pipeline.retriever import HybridRetriever
 
 
 class IngestNode(PipelineNode):
@@ -96,8 +99,34 @@ class ClassifyNode(PipelineNode):
 
     node_name = "classify"
 
+    def __init__(self, classifier: CourtDocumentClassifier | None = None) -> None:
+        self.classifier = classifier or CourtDocumentClassifier()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "classify_status": "stub"}
+        masked_pages = state.get("masked_pages")
+        ocr_result = state.get("ocr_result")
+        doc_id = str(state.get("doc_id", "doc"))
+
+        combined_text = ""
+        if masked_pages:
+            combined_text = "\n\n".join(mp.masked_text for mp in masked_pages)
+        elif ocr_result:
+            combined_text = "\n\n".join(pr.full_text for pr in ocr_result.page_results)
+
+        if not combined_text:
+            return {**state, "classify_status": "skipped", "error": "No text available for classification"}
+
+        result = self.classifier.classify_text(combined_text, doc_id=doc_id)
+        return {
+            **state,
+            "document_type": result.document_type,
+            "court_level": result.court_level,
+            "case_type": result.case_type,
+            "classification_language": result.language,
+            "classification_confidence": result.confidence,
+            "indicators_found": result.indicators_found,
+            "classify_status": "completed",
+        }
 
 
 class ChunkIndexNode(PipelineNode):
@@ -105,8 +134,38 @@ class ChunkIndexNode(PipelineNode):
 
     node_name = "chunk_index"
 
+    def __init__(
+        self,
+        chunker: StructureAwareChunker | None = None,
+        retriever: HybridRetriever | None = None,
+    ) -> None:
+        self.chunker = chunker or StructureAwareChunker()
+        self.retriever = retriever or HybridRetriever()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "chunk_status": "stub"}
+        masked_pages = state.get("masked_pages")
+        ocr_result = state.get("ocr_result")
+        doc_id = str(state.get("doc_id", "doc"))
+
+        pages: list[str] = []
+        if masked_pages:
+            pages = [mp.masked_text for mp in masked_pages]
+        elif ocr_result:
+            pages = [pr.full_text for pr in ocr_result.page_results]
+
+        if not pages:
+            return {**state, "chunk_status": "skipped", "error": "No pages to chunk"}
+
+        chunks = self.chunker.chunk_document(pages, doc_id=doc_id)
+        await self.retriever.index_chunks(chunks)
+
+        return {
+            **state,
+            "chunks": chunks,
+            "total_chunks": len(chunks),
+            "retriever": self.retriever,
+            "chunk_status": "completed",
+        }
 
 
 class ExtractFieldsNode(PipelineNode):
