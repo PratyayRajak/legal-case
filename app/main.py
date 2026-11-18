@@ -1,8 +1,11 @@
 """FastAPI application entry point."""
 from __future__ import annotations
 
+import uuid
+from collections.abc import Awaitable, Callable
+
 import structlog
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import admin, documents, jobs, qa
@@ -18,11 +21,27 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Production Security Headers Middleware
+@app.middleware("http")
+async def add_security_headers(
+    request: Request, call_next: Callable[[Request], Awaitable[Response]]
+) -> Response:
+    request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request_id
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["X-Legal-Disclaimer"] = (
+        "AI-assisted summary. Verify against the source document."
+    )
+    return response
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
