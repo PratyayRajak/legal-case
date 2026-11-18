@@ -173,7 +173,9 @@ def run_evaluation(
         }
         # In placeholder rules testing, test with placeholder rules directory
         placeholder_dir = Path("rules/definitions")
-        rule_eval_out = rules_engine.evaluate(canonical_record, rules_dir=placeholder_dir)
+        rule_eval_out = rules_engine.evaluate(
+            canonical_record, rules_dir=placeholder_dir, active_only=False
+        )
         pred_rule_dict = {r.rule_id: r.result.value for r in rule_eval_out}
 
         # Compare against expected rules

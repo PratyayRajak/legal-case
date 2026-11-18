@@ -26,19 +26,22 @@ class RulesEngine:
         canonical_fields: dict[str, Any],
         case_date: date | None = None,
         rules_dir: Any = None,
+        active_only: bool = True,
     ) -> list[RuleCheckResult]:
-        """Evaluate all applicable active rules.
+        """Evaluate applicable rules.
 
         Args:
             canonical_fields: The normalized canonical case record.
             case_date: The relevant date for effective-date filtering.
             rules_dir: Optional path to rules directory (for testing).
+            active_only: Whether to evaluate only ACTIVE rules (default True).
+                When False, loads all rules including DRAFT rules for testing.
 
         Returns:
             List of RuleCheckResult, one per evaluated rule.
         """
         results: list[RuleCheckResult] = []
-        if settings.environment == Environment.production:
+        if active_only or settings.environment == Environment.production:
             rules = active_rules(rules_dir) if rules_dir else active_rules()
         else:
             rules = load_rules(rules_dir) if rules_dir else load_rules()

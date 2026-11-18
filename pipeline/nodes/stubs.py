@@ -283,7 +283,9 @@ class RulesCheckNode(PipelineNode):
         if not extracted:
             return {**state, "rules_results": [], "rules_status": "skipped"}
 
-        rule_results = self.engine.evaluate(canonical_fields=extracted)
+        rule_results = self.engine.evaluate(
+            canonical_fields=extracted, active_only=False
+        )
         return {
             **state,
             "rules_results": rule_results,
