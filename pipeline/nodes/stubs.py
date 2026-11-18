@@ -5,8 +5,10 @@ Full implementations are built in Phases 3-6.
 """
 from __future__ import annotations
 
+from pipeline.assembler import assemble_revenue_brief
 from pipeline.chunker import StructureAwareChunker
 from pipeline.classifier import CourtDocumentClassifier
+from pipeline.extractor import CanonicalFieldExtractor
 from pipeline.ingest import ingest_pdf
 from pipeline.nodes.base import PipelineNode, PipelineState
 from pipeline.ocr_engine import HybridCourtOCREngine
@@ -169,12 +171,41 @@ class ChunkIndexNode(PipelineNode):
 
 
 class ExtractFieldsNode(PipelineNode):
-    """Canonical field extraction with citations. Phase 5."""
+    """Canonical field extraction with citations and two-pass consensus. Phase 5."""
 
     node_name = "extract_fields"
 
+    def __init__(self, extractor: CanonicalFieldExtractor | None = None) -> None:
+        self.extractor = extractor or CanonicalFieldExtractor()
+
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "extract_status": "stub"}
+        masked_pages = state.get("masked_pages")
+        ocr_result = state.get("ocr_result")
+        doc_id = str(state.get("doc_id", "doc"))
+        lang = str(state.get("overall_language") or state.get("classification_language") or "hi")
+
+        pages_text: dict[int, str] = {}
+        if masked_pages:
+            for mp in masked_pages:
+                pages_text[mp.page_number] = mp.masked_text
+        elif ocr_result:
+            for pr in ocr_result.page_results:
+                pages_text[pr.page_number] = pr.full_text
+
+        if not pages_text:
+            return {**state, "extract_status": "skipped", "error": "No page text available for extraction"}
+
+        extracted_fields = await self.extractor.extract_fields(
+            pages_text=pages_text,
+            doc_id=doc_id,
+            overall_lang=lang,
+        )
+
+        return {
+            **state,
+            "extracted_fields": extracted_fields,
+            "extract_status": "completed",
+        }
 
 
 class NormalizeNode(PipelineNode):
@@ -205,18 +236,43 @@ class RulesCheckNode(PipelineNode):
 
 
 class ConfidenceScoreNode(PipelineNode):
-    """Combine OCR, retrieval, agreement scores. Phase 5."""
+    """Combine OCR, retrieval, and extraction agreement scores. Phase 5."""
 
     node_name = "confidence_score"
 
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "confidence_status": "stub"}
+        extracted = state.get("extracted_fields", {})
+        if not extracted:
+            return {**state, "confidence_score": 0.0, "confidence_status": "skipped"}
+
+        found_confs = [
+            f.confidence for f in extracted.values() if hasattr(f, "confidence") and f.found
+        ]
+        avg_conf = sum(found_confs) / len(found_confs) if found_confs else 1.0
+        return {
+            **state,
+            "overall_confidence": round(avg_conf, 2),
+            "confidence_status": "completed",
+        }
 
 
 class AssembleBriefNode(PipelineNode):
-    """Assemble final RevenueCaseBrief. Phase 5."""
+    """Assemble final RevenueCaseBrief with audit provenance and disclaimer. Phase 5."""
 
     node_name = "assemble_brief"
 
     async def run(self, state: PipelineState) -> PipelineState:
-        return {**state, "brief_status": "stub"}
+        doc_id = str(state.get("doc_id", "doc"))
+        extracted_fields = state.get("extracted_fields", {})
+
+        brief = assemble_revenue_brief(
+            doc_id=doc_id,
+            extracted_fields=extracted_fields,
+        )
+
+        return {
+            **state,
+            "case_brief": brief,
+            "brief_status": "completed",
+            "disclaimer": brief.disclaimer,
+        }

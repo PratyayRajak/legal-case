@@ -55,14 +55,36 @@ procedural rule compliance.
 | 1 | Skeleton + schemas + interfaces | ✅ Done |
 | 2 | Glossary + eval harness + synthetic data | ✅ Done |
 | 3 | Ingest + OCR + PII | ✅ Done |
-| 4 | Chunking + retrieval | 🔲 Next |
-| 5 | Field extraction | 🔲 Planned |
-| 6 | Normalization + conflicts | 🔲 Planned |
+| 4 | Chunking + retrieval | ✅ Done |
+| 5 | Field extraction | ✅ Done |
+| 6 | Normalization + conflicts | 🔲 Next |
 | 7 | Rules engine + import | 🔲 Planned |
 | 8 | API + background jobs | 🔲 Planned |
 | 9 | Frontend | 🔲 Planned |
 | 10 | Q&A + eval | 🔲 Planned |
 | 11 | Hardening + deployment | 🔲 Planned |
+
+## Phase 4 Implementation Summary
+
+- **Document Classifier (`pipeline/classifier.py`)**:
+  - Classifies document types (`petition`, `order_sheet`, `judgment`, `notice`, `annexure`) and court levels (`district`, `high`, `supreme`, `tribunal`).
+- **Structure-Aware Chunker (`pipeline/chunker.py`)**:
+  - Respects page and legal section boundaries ("न्यायालय", "आदेश", "ORDER SHEET", "तथ्य", "निर्णय").
+  - Ensures citations never cross page boundaries.
+- **Hybrid Retriever (`pipeline/retriever.py`)**:
+  - Bilingual BM25Okapi lexical index + dense vector search combined via Reciprocal Rank Fusion (RRF, $k=60$).
+
+## Phase 5 Implementation Summary
+
+- **Prompts & Security (`pipeline/prompts.py`)**:
+  - Strict untrusted data enclosure (`<document_text>`), zero-temperature determinism, strict JSON schema.
+- **Two-Pass Canonical Field Extractor (`pipeline/extractor.py`)**:
+  - Pass 1: Deterministic regex and concept matching for case numbers, dates, parties, status, and rejection grounds.
+  - Pass 2: Semantic extraction via `LLMClient` with fallback consensus.
+  - Verbatim citation verification matching snippet presence in page OCR text via Unicode NFKC normalization.
+  - Strict "not found" preference over hallucination.
+- **Brief Assembler (`pipeline/assembler.py`)**:
+  - Assembles `RevenueCaseBrief` attaching pipeline/rules/glossary provenance and the mandatory legal disclaimer.
 
 ## Phase 3 Implementation Summary
 

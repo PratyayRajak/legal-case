@@ -11,6 +11,7 @@ from pipeline.retriever import (
     cosine_similarity,
     tokenize_bilingual,
 )
+from tests.conftest import run_coro
 
 
 class MockSemanticEmbedder(Embedder):
@@ -67,24 +68,23 @@ class TestRetriever:
         assert pytest.approx(cosine_similarity(v1, v2)) == 1.0
         assert pytest.approx(cosine_similarity(v1, v3)) == 0.0
 
-    @pytest.mark.asyncio
-    async def test_hybrid_rrf_retrieval(self):
+    def test_hybrid_rrf_retrieval(self):
         chunks = [
             Chunk("c1", "d1", 1, 0, 50, None, "hi", "प्रार्थना पत्र खारिज किया जाता है।", 6),
             Chunk("c2", "d1", 2, 0, 50, None, "en", "The mutation petition is dismissed.", 6),
             Chunk("c3", "d1", 3, 0, 50, None, "hi", "वादी का नाम खतौनी में दर्ज किया जाए।", 8),
         ]
         retriever = HybridRetriever(embedder=MockSemanticEmbedder())
-        await retriever.index_chunks(chunks)
+        run_coro(retriever.index_chunks(chunks))
 
         # Search in Hindi
-        hits_hi = await retriever.search("खारिज आदेश", top_k=2)
+        hits_hi = run_coro(retriever.search("खारिज आदेश", top_k=2))
         assert len(hits_hi) > 0
         top_ids = [h.chunk.chunk_id for h in hits_hi]
         assert "c1" in top_ids
 
         # Search in English
-        hits_en = await retriever.search("dismissed petition", top_k=2)
+        hits_en = run_coro(retriever.search("dismissed petition", top_k=2))
         assert len(hits_en) > 0
         top_ids_en = [h.chunk.chunk_id for h in hits_en]
         assert "c2" in top_ids_en
