@@ -59,10 +59,27 @@ procedural rule compliance.
 | 5 | Field extraction | ✅ Done |
 | 6 | Normalization + conflicts | ✅ Done |
 | 7 | Rules engine + import | ✅ Done |
-| 8 | API + background jobs | 🔲 Next |
-| 9 | Frontend | 🔲 Planned |
+| 8 | API + background jobs | ✅ Done |
+| 9 | Frontend | 🔲 Next |
 | 10 | Q&A + eval | 🔲 Planned |
 | 11 | Hardening + deployment | 🔲 Planned |
+
+## Phase 8 Implementation Summary
+
+- **FastAPI Endpoints (`app/routers/`)**:
+  - `POST /api/v1/documents/upload`: PDF magic byte validation, SHA-256 calculation, disk storage, and background processing task queue.
+  - `GET /api/v1/documents/{doc_id}`: Document status, progress %, and pipeline step.
+  - `GET /api/v1/documents/{doc_id}/brief`: Structured `RevenueCaseBrief` retrieval.
+  - `GET /api/v1/documents/{doc_id}/rules`: Versioned rule compliance report.
+  - `GET /api/v1/documents/{doc_id}/conflicts`: Cross-document conflict report with dual citations.
+  - `GET /api/v1/jobs/{job_id}`: Background job progress tracking.
+  - `POST /api/v1/qa/ask`: Follow-up Q&A grounded exclusively in source file.
+  - `GET /api/v1/admin/rules` & `POST /api/v1/admin/rules/verify`: Rule lifecycle management & legal expert verification gate.
+  - `GET /api/v1/admin/audit-logs`: Query immutable audit trail.
+- **Background Pipeline Orchestrator (`app/services/job_runner.py`)**:
+  - Sequentially coordinates all 10 pipeline stages with progress tracking (10% to 100%).
+- **Tamper-Evident Audit Service (`app/services/audit.py`)**:
+  - Tracks document hashes, actions, user identifiers, and timestamps.
 
 ## Phase 7 Implementation Summary
 

@@ -20,13 +20,23 @@ def load_rules(directory: Path | None = None) -> list[Rule]:
         return rules
 
     for yaml_file in sorted(directory.glob("*.yaml")):
-        with open(yaml_file, encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-        if isinstance(data, list):
-            for rule_data in data:
-                rules.append(Rule(**rule_data))
-        elif isinstance(data, dict):
-            rules.append(Rule(**data))
+        rules.extend(load_rules_from_file(yaml_file))
+    return rules
+
+
+def load_rules_from_file(file_path: str | Path) -> list[Rule]:
+    """Load rules from a specific YAML file."""
+    p = Path(file_path)
+    if not p.exists():
+        return []
+    with open(p, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    rules: list[Rule] = []
+    if isinstance(data, list):
+        for item in data:
+            rules.append(Rule(**item))
+    elif isinstance(data, dict):
+        rules.append(Rule(**data))
     return rules
 
 

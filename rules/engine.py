@@ -12,8 +12,9 @@ from datetime import date
 from typing import Any
 
 import rules.checks  # noqa: F401
+from config import Environment, settings
 from rules.evaluator import evaluate_condition
-from rules.loader import active_rules, get_check
+from rules.loader import active_rules, get_check, load_rules
 from rules.models import Rule, RuleCheckResult, RuleResult
 
 
@@ -37,7 +38,10 @@ class RulesEngine:
             List of RuleCheckResult, one per evaluated rule.
         """
         results: list[RuleCheckResult] = []
-        rules = active_rules(rules_dir) if rules_dir else active_rules()
+        if settings.environment == Environment.production:
+            rules = active_rules(rules_dir) if rules_dir else active_rules()
+        else:
+            rules = load_rules(rules_dir) if rules_dir else load_rules()
 
         for rule in rules:
             if not self._applies_to(rule, canonical_fields):
@@ -50,11 +54,19 @@ class RulesEngine:
     def _applies_to(self, rule: Rule, fields: dict[str, Any]) -> bool:
         """Check if the rule applies to the given case."""
         applies_to = rule.applies_to
-        case_type = fields.get("case_type", {})
-        if isinstance(case_type, dict):
+        case_type = fields.get("case_type")
+        if hasattr(case_type, "value"):
+            case_type = getattr(case_type, "value", "")
+        elif isinstance(case_type, dict):
             case_type = case_type.get("value", "")
 
-        return not ("case_types" in applies_to and case_type not in applies_to["case_types"])
+        case_type_str = str(case_type or "").lower()
+        if "case_types" in applies_to and applies_to["case_types"]:
+            allowed = [str(x).lower() for x in applies_to["case_types"]]
+            if case_type_str not in allowed:
+                return False
+
+        return True
 
     def _evaluate_rule(self, rule: Rule, fields: dict[str, Any]) -> RuleCheckResult:
         """Evaluate a single rule. Returns cannot_evaluate if fields are missing."""
@@ -62,9 +74,13 @@ class RulesEngine:
         missing = []
         for req_field in rule.requires_fields:
             field_data = fields.get(req_field)
-            if field_data is None or (
-                isinstance(field_data, dict)
-                and (not field_data.get("found", False) or field_data.get("needs_review", False))
+            if field_data is None:
+                missing.append(req_field)
+            elif hasattr(field_data, "found"):
+                if not field_data.found or getattr(field_data, "needs_review", False):
+                    missing.append(req_field)
+            elif isinstance(field_data, dict) and (
+                not field_data.get("found", False) or field_data.get("needs_review", False)
             ):
                 missing.append(req_field)
 
