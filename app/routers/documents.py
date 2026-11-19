@@ -5,7 +5,7 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, UploadFile, status
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Response, UploadFile, status
 
 from app.services.audit import audit_service
 from app.services.job_runner import JobStatus, job_runner
@@ -160,3 +160,61 @@ async def get_document_conflicts_report(doc_id: str) -> dict[str, Any]:
         doc_hash=job.doc_hash,
     )
     return job.conflict_report.model_dump()
+
+
+@router.get("/{doc_id}/export/pdf")
+async def export_document_brief_pdf(doc_id: str) -> Response:
+    """Export the case brief as a judge-ready, downloadable PDF."""
+    job = job_runner.get_job_by_doc_id(doc_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Document {doc_id} not found")
+
+    if job.status != JobStatus.completed or job.case_brief is None:
+        raise HTTPException(
+            status_code=status.HTTP_202_ACCEPTED,
+            detail=f"Document is still {job.status.value}: {job.current_step}",
+        )
+
+    from app.services.export_service import BriefExportService
+    pdf_bytes = BriefExportService.export_as_pdf_bytes(job.case_brief)
+
+    audit_service.log(
+        action="export_brief_pdf",
+        document_id=doc_id,
+        doc_hash=job.doc_hash,
+    )
+
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename=case_brief_{doc_id}.pdf"},
+    )
+
+
+@router.get("/{doc_id}/export/text")
+async def export_document_brief_text(doc_id: str) -> Response:
+    """Export the case brief as a plain text summary."""
+    job = job_runner.get_job_by_doc_id(doc_id)
+    if not job:
+        raise HTTPException(status_code=404, detail=f"Document {doc_id} not found")
+
+    if job.status != JobStatus.completed or job.case_brief is None:
+        raise HTTPException(
+            status_code=status.HTTP_202_ACCEPTED,
+            detail=f"Document is still {job.status.value}: {job.current_step}",
+        )
+
+    from app.services.export_service import BriefExportService
+    text_summary = BriefExportService.export_as_text_summary(job.case_brief)
+
+    audit_service.log(
+        action="export_brief_text",
+        document_id=doc_id,
+        doc_hash=job.doc_hash,
+    )
+
+    return Response(
+        content=text_summary,
+        media_type="text/plain; charset=utf-8",
+        headers={"Content-Disposition": f"attachment; filename=case_brief_{doc_id}.txt"},
+    )

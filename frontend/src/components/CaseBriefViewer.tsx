@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Citation, ExtractedField, RevenueCaseBrief } from "../types";
 import { useLanguage } from "../context/LanguageContext";
-import { CheckCircle, AlertTriangle, HelpCircle, ExternalLink, Edit3, X } from "lucide-react";
+import { CheckCircle, AlertTriangle, HelpCircle, ExternalLink, Edit3, X, Download, FileText } from "lucide-react";
+import { getDocumentPdfExportUrl, getDocumentTextExportUrl } from "../lib/api";
 
 interface CaseBriefViewerProps {
   brief: RevenueCaseBrief;
@@ -108,17 +109,35 @@ export const CaseBriefViewer: React.FC<CaseBriefViewerProps> = ({
 
   return (
     <div className="p-6 space-y-6 bg-slate-50 min-h-full">
-      {/* Header Info Banner */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 flex items-center justify-between">
+      {/* Header Info Banner with One-Click Exports */}
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-3">
         <div>
           <span className="text-xs text-slate-500 font-mono">DOC ID: {brief.doc_id}</span>
           <h2 className="text-lg font-bold text-slate-800">
             {lang === "hi" ? "केस संक्षिप्त विवरण (डिजिटल पत्रावली)" : "Revenue Court Case Brief"}
           </h2>
         </div>
-        <div className="text-right text-xs text-slate-400 font-mono">
-          <div>Pipeline: v{brief.pipeline_version}</div>
-          <div>Glossary: v{brief.glossary_version}</div>
+        <div className="flex items-center space-x-2">
+          <a
+            href={getDocumentPdfExportUrl(brief.doc_id)}
+            download={`case_brief_${brief.doc_id}.pdf`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition shadow-sm"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>{lang === "hi" ? "पीडीएफ निर्यात" : "Export PDF"}</span>
+          </a>
+          <a
+            href={getDocumentTextExportUrl(brief.doc_id)}
+            download={`case_brief_${brief.doc_id}.txt`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>{lang === "hi" ? "टेक्स्ट प्रति" : "Export Text"}</span>
+          </a>
         </div>
       </div>
 
