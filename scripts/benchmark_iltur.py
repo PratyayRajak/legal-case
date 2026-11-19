@@ -13,7 +13,6 @@ from pathlib import Path
 from typing import Any
 
 from eval.iltur_adapter import ILTURBenchmarkAdapter
-from eval.normalize import convert_hindi_digits_to_ascii
 from pipeline.extractor import verify_citation_in_page
 
 

@@ -1,0 +1,58 @@
+# Civil Procedure Code (CPC) & Limitation Act Procedural Rules
+# Evaluated deterministically by rules/engine.py on canonical fields
+
+- id: R_CPC_O7_R11_CAUSE_OF_ACTION
+  text_hi: "सिविल प्रक्रिया संहिता आदेश 7 नियम 11: वाद पत्र में वाद हेतुक (Cause of Action) स्पष्ट रूप से प्रकट होना आवश्यक है।"
+  source: "Code of Civil Procedure, 1908 — Order VII Rule 11(a)"
+  effective_from: "1908-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [civil, revenue]
+  requires_fields: [case_type, current_status]
+  logic:
+    description: "Plaint must disclose a valid proceeding and cause of action."
+    if: {field: case_type, in: [civil, revenue]}
+    require: {field: current_status, not_in: [rejected, dismissed]}
+  severity: blocking
+  message_hi: "वाद पत्र में वाद हेतुक का अभाव होने के कारण आदेश 7 नियम 11 के तहत खारिज योग्य।"
+  message_en: "Plaint liable for rejection under Order VII Rule 11(a) for lack of cause of action."
+  status: DRAFT
+  review:
+    drafted_by: "legal_research_team"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {case_type: {value: civil, found: true}, current_status: {value: pending, found: true}}
+      expect: pass
+    - input: {case_type: {value: civil, found: true}, current_status: {value: rejected, found: true}}
+      expect: fail
+    - input: {case_type: {value: civil, found: false}, current_status: {value: null, found: false}}
+      expect: cannot_evaluate
+
+- id: R_LIMITATION_ACT_SEC5_CONDONATION
+  text_hi: "परिसीमा अधिनियम 1963 धारा 5: परिसीमा अवधि के बाद अपील केवल यथोचित कारण (Sufficient Cause) दर्शित करने पर ही ग्राह्य होगी।"
+  source: "The Limitation Act, 1963 — Section 5"
+  effective_from: "1964-01-01"
+  effective_to: null
+  applies_to:
+    case_types: [revenue, civil]
+  requires_fields: [filing_date, next_hearing_date]
+  logic:
+    description: "Hearing date cannot precede filing date; delay must be justified."
+    if: {field: filing_date}
+    require: {field: next_hearing_date, after: filing_date}
+  severity: blocking
+  message_hi: "परिसीमा अधिनियम धारा 5 के अंतर्गत विलंब का समुचित स्पष्टीकरण आवश्यक है।"
+  message_en: "Under Section 5 Limitation Act, sufficient cause must be established for condonation of delay."
+  status: DRAFT
+  review:
+    drafted_by: "legal_research_team"
+    verified_by: null
+    verified_on: null
+  tests:
+    - input: {filing_date: {value: "2023-01-01", found: true}, next_hearing_date: {value: "2023-05-01", found: true}}
+      expect: pass
+    - input: {filing_date: {value: "2023-05-01", found: true}, next_hearing_date: {value: "2023-01-01", found: true}}
+      expect: fail
+    - input: {filing_date: {value: null, found: false}, next_hearing_date: {value: null, found: false}}
+      expect: cannot_evaluate
