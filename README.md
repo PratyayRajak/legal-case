@@ -41,21 +41,21 @@ flowchart LR
     I --> J[Next.js Bilingual UI]
 ```
 
-### Complete 11-Phase Implementation
+### Core System Modules
 
-| Phase | Module | Key Capabilities | Status |
-| :---: | :--- | :--- | :---: |
-| **1** | **Skeleton & Schemas** | Pydantic canonical models, pipeline interfaces, rules skeleton | ✅ **Done** |
-| **2** | **Eval Harness & Glossary** | Devanagari normalizer, synthetic PDF generator, CI gate | ✅ **Done** |
-| **3** | **Ingest, OCR & PII** | OpenCV deskew/binarization, Tesseract, Fernet-encrypted PII masker | ✅ **Done** |
-| **4** | **Chunking & Retrieval** | Section-aware chunker, BM25Okapi + Dense hybrid retriever (RRF $k=60$) | ✅ **Done** |
-| **5** | **Field Extraction** | Two-pass extractor with verbatim Unicode NFKC citation verification | ✅ **Done** |
-| **6** | **Normalization & Conflicts** | Concept ontology mapper, cross-document temporal & party conflict detector | ✅ **Done** |
-| **7** | **Rules Engine** | Declarative AST rules evaluator, UP Revenue Code rules, CSV legal import | ✅ **Done** |
-| **8** | **Backend API & Orchestration** | FastAPI async endpoints, 10-stage background job runner, audit logging | ✅ **Done** |
-| **9** | **Judicial Web UI** | Next.js 14 + Tailwind split-screen viewer, citation jumper, bilingual context | ✅ **Done** |
-| **10** | **Q&A Faithfulness & Security** | Untrusted data sanitizer, faithfulness benchmark, adversarial attack suite | ✅ **Done** |
-| **11** | **Hardening & Deployment** | Multi-stage Docker, AWS Mumbai (`ap-south-1`) spec, operations runbook | ✅ **Done** |
+| Layer | Module | Key Capabilities |
+| :---: | :--- | :--- |
+| **Data Layer** | **Schemas & Data Models** | Pydantic canonical court schemas, pipeline interfaces, versioned models |
+| **Ingestion** | **Court OCR & PII Masker** | OpenCV deskew/binarization, Tesseract, Fernet-encrypted Indian PII masking |
+| **Retrieval** | **Structure-Aware Retriever** | Section boundary chunker, BM25Okapi + Dense hybrid retriever (RRF $k=60$) |
+| **Extraction** | **Two-Pass Consensus Extractor** | Candidate extraction with verbatim Unicode NFKC citation verification |
+| **Normalization** | **Ontology & Conflict Engine** | Concept ontology mapper, cross-document temporal & party conflict detector |
+| **Reasoning** | **Deterministic Rules Engine** | Declarative AST rules evaluator, UP Revenue Code & CPC Order VII Rule 11 |
+| **Backend API** | **FastAPI Async Engine** | Async REST API endpoints, 10-stage background job runner, SHA-256 audit logs |
+| **Frontend UI** | **Judicial Web Interface** | Next.js 14 + Tailwind split-screen viewer, bidirectional citation jumping, PDF/Text exports |
+| **Evaluation** | **Benchmark & SMT Suite** | Evaluation against IIT Kanpur IL-TUR (ACL 2024), OCR stress test, Z3 SMT proofs |
+| **Security** | **Data Sovereignty & Defense** | DPDPA 2023 compliance, XML boundary breakout defense, untrusted data sanitizer |
+| **Deployment** | **Containerized Infrastructure** | Multi-stage Docker, AWS Mumbai (`ap-south-1`) production spec, operations runbook |
 
 ---
 
